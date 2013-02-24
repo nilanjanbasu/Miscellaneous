@@ -203,6 +203,7 @@ public class ContestFrame extends JFrame {
 		JButton submitbtn;
 		JButton skipbtn;
 		ImagePanel img;
+		JLabel question_no;
 		
 		QuestionWrap cur_question= null;
 		
@@ -239,6 +240,15 @@ public class ContestFrame extends JFrame {
 //			add(btnPane, "span 2");
 			add(btnPane, BorderLayout.SOUTH);
 			
+			
+			JPanel status_pane = new JPanel(new MigLayout());
+			question_no= new JLabel("Question 1/20");
+			question_no.setFont(new Font("Dialog", Font.BOLD, 16));
+			
+			status_pane.add(question_no, "left bottom");
+			
+			
+			
 			questions_editor = new JEditorPane();
 			questions_editor.setEditable(false);		
 			questions_editor.setFont(new Font("Dialog", Font.BOLD, 14));
@@ -256,7 +266,8 @@ public class ContestFrame extends JFrame {
 			hint_editor.setEditable(false);
 			hint_editor.setFont(new Font("Dialog", Font.BOLD, 18));
 			
-			texts.add(editorScrollPane, "span 3, wrap, w 100%");
+			texts.add(status_pane, "span 3, w 100%, wrap");
+			texts.add(editorScrollPane, "span 3, wrap, w 100%, h 100%");
 			texts.add(hint_editor, "span 3, wrap, w 100%");
 			texts.add(answer, "aligny top");
 			texts.add(checkbt, "aligny top");
@@ -328,6 +339,7 @@ public class ContestFrame extends JFrame {
 				
 				public void run() {
 					questions_editor.setText(cur_question.getQuestion());
+					question_no.setText("Question "+String.valueOf(cur_team.getCount())+"/20");
 					hint_editor.setText("");
 					if(!cur_question.hasHint())
 						hintbt.setEnabled(true);
