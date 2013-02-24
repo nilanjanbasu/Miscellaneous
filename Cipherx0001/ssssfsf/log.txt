@@ -1,0 +1,5 @@
+Starting log for team: ssssfsf
+ssssfsf:during question no-1: [LOG]Entered: goo || Processed to be: goo
+ssssfsf:during question no-1: [LOG]Answer: (goo) rejected
+ssssfsf:during question no-1: [LOG]Entered: google || Processed to be: google
+ssssfsf:during question no-1: [LOG]Answer: (google) accepted

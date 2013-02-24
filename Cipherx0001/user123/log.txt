@@ -1,0 +1,9 @@
+Starting log for team: user123
+user123:during question no-1: [LOG]Pressed Skip Button
+user123:during question no-2: [LOG]Pressed Skip Button
+user123:during question no-3: [LOG]Pressed Skip Button
+user123:during question no-4: [LOG]Pressed Skip Button
+user123:during question no-5: [LOG]Pressed Skip Button
+user123:during question no-6: [LOG]Pressed Submit Button
+user123:during question no-6: [LOG]Submitting results to main thread... at ContestMain.submitAction()
+user123:during question no-6: [LOG]At main thread: Score saved. Now finishing up!

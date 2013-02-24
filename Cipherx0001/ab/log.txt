@@ -1,0 +1,4 @@
+Starting log for team: ab
+ab:during question no-1: [LOG]Pressed Submit Button
+ab:during question no-1: [LOG]Submitting results to main thread... at ContestMain.submitAction()
+ab:during question no-1: [LOG]At main thread: Score saved. Now finishing up!

@@ -1,0 +1,4 @@
+Starting log for team: aga
+aga:during question no-1: [LOG]Pressed Skip Button
+aga:during question no-2: [LOG]Submitting results to main thread... at ContestMain.submitAction()
+aga:during question no-2: [LOG]At main thread: Score saved. Now finishing up!

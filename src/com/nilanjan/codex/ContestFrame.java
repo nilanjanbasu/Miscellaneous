@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -58,6 +59,7 @@ public class ContestFrame extends JFrame {
 		ContestFrame frame = new ContestFrame(new RoundData(), new Object(), new Data(), "Cipherx0001",l);
 		frame.makeRulesPageVisible();
 		frame.setVisible(true);
+		
 //				
 	}
 
@@ -74,7 +76,9 @@ public class ContestFrame extends JFrame {
 		
 		setExtendedState(ContestFrame.MAXIMIZED_BOTH); //maximise window
 		setAlwaysOnTop(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
 		
 		JPanel cards = new JPanel(new CardLayout());
 		setContentPane(cards);
@@ -204,6 +208,7 @@ public class ContestFrame extends JFrame {
 		JButton skipbtn;
 		ImagePanel img;
 		JLabel question_no;
+		JLabel timelabel;
 		
 		QuestionWrap cur_question= null;
 		
@@ -242,12 +247,14 @@ public class ContestFrame extends JFrame {
 			
 			
 			JPanel status_pane = new JPanel(new MigLayout());
-			question_no= new JLabel("Question 1/20");
+			question_no= new JLabel("Question 1/22");
 			question_no.setFont(new Font("Dialog", Font.BOLD, 16));
 			
+			timelabel = new JLabel("Full Time: 60:00");
+			timelabel.setFont(new Font("Dialog", Font.BOLD, 16));
+			
 			status_pane.add(question_no, "left bottom");
-			
-			
+			status_pane.add(timelabel, "pos 70% 20%");			
 			
 			questions_editor = new JEditorPane();
 			questions_editor.setEditable(false);		
@@ -312,7 +319,7 @@ public class ContestFrame extends JFrame {
 			checkbt.addActionListener(new ActionListener() {
 				
 				public void actionPerformed(ActionEvent e) { //VERY IMP FUNCTION TAKE UTMOST CARE
-					String ans = answer.getText().toLowerCase().replaceAll("\\s+"," ").trim();
+					String ans = answer.getText().toLowerCase().replaceAll("\\s+","").trim();
 					
 					cur_team.log("Entered: "+answer.getText()+" || Processed to be: "+ ans);
 					
@@ -338,28 +345,51 @@ public class ContestFrame extends JFrame {
 			EventQueue.invokeLater(new Runnable() {
 				
 				public void run() {
-					questions_editor.setText(cur_question.getQuestion());
-					question_no.setText("Question "+String.valueOf(cur_team.getCount())+"/20");
-					hint_editor.setText("");
-					if(!cur_question.hasHint())
-						hintbt.setEnabled(true);
-					else
-						hintbt.setEnabled(false);
-					answer.setText("");
-					answer.setBackground(Color.white);
-					if(!cur_team.hasNextQuestion()){
-						skipbtn.setEnabled(false);
+					synchronized (timelabel) {
+						questions_editor.setText(cur_question.getQuestion());
+						question_no.setText("Question "+String.valueOf(cur_team.getCount())+"/22");
+						hint_editor.setText("");
+						if(!cur_question.hasHint())
+							hintbt.setEnabled(true);
+						else
+							hintbt.setEnabled(false);
+						answer.setText("");
+						answer.setBackground(Color.white);
+						if(!cur_team.hasNextQuestion()){
+							skipbtn.setEnabled(false);
+						}
+						
+						if(cur_question.hasImage()){
+							File f = getImagePath(otherData.question_file, cur_question.getImage());
+							img.setImage(f);
+						} else {
+							img.clearImage();
+						}
 					}
 					
-					if(cur_question.hasImage()){
-						File f = getImagePath(otherData.question_file, cur_question.getImage());
-						img.setImage(f);
-					} else {
-						img.clearImage();
-					}
-					//TODO Image
 				}
 			});
+			
+			MyTimer timer = new MyTimer(10, 1000);
+			timer.addListener(new TimeListener() {
+				
+				public void timeActionPerformed(final TimeEvent ev) {
+					if(!ev.isEnd){
+							EventQueue.invokeLater(new Runnable() {							
+								public void run() {
+									synchronized (timelabel) {
+										timelabel.setText("Time Remaining: "+ String.valueOf(ev.minutes)+":"+ String.valueOf(ev.sec));
+									}
+																	
+								}
+							});
+					} else{
+						submitAction();
+					}
+				}
+			});
+			
+			//timer.start();
 			
 			
 		}
