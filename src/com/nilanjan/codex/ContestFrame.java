@@ -389,7 +389,7 @@ public class ContestFrame extends JFrame {
 				}
 			});
 			
-			//timer.start();
+			timer.start();
 			
 			
 		}

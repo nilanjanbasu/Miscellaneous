@@ -1,3 +1,0 @@
-Starting log for team: akak
-akak:during question no-1: [LOG]Submitting results to main thread... at ContestMain.submitAction()
-akak:during question no-1: [LOG]At main thread: Score saved. Now finishing up!

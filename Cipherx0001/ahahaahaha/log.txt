@@ -1,4 +1,0 @@
-Starting log for team: ahahaahaha
-ahahaahaha:during question no-1: [LOG]Pressed Submit Button
-ahahaahaha:during question no-1: [LOG]Submitting results to main thread... at ContestMain.submitAction()
-ahahaahaha:during question no-1: [LOG]At main thread: Score saved. Now finishing up!
